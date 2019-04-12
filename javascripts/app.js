@@ -1,26 +1,29 @@
 // Rover Object Goes Here
 // ======================
 var grid = [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-];
+                      //NORTH
+           [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+           [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+   /*WEST*/[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], //EAST
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];                    //SOUTH
 
 var _X = 0;
 var _Y = 0;
 var rover = {
   direction: "N",
-  position: grid[_X][_Y],
+  position: [[_X], [_Y]],
+  travelLog: [[0, 0]]
 }
 
 // ======================
+
 
 function turnLeft(rover){
   switch(rover.direction){
@@ -61,32 +64,40 @@ function turnRight(rover){
 function moveForward(rover){
   switch(rover.direction){
     case "N":
-     if(_Y>0){  
-        _Y--;
+     if(_X>0){  
+        _X--;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
         break;
       }
     case "W":
-     if(_X>0){
-        _X--;
+     if(_Y>0){
+        _Y--;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
         break;
       }
     case "S":
-      if(_Y<10){
-        _Y++;
+      if(_X<10){
+        _X++;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
         break;
       }
     case "E":
-     if(_X<10){
-        _X++;
+     if(_Y<10){
+        _Y++;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
@@ -94,6 +105,7 @@ function moveForward(rover){
       }
   }
   console.log("The Rover is now at " + "["+_X+", "+_Y+"]");
+  recordLog(rover);
 }
 
 function moveBackward(rover){
@@ -101,6 +113,8 @@ function moveBackward(rover){
     case "N":
       if(_Y<10){
         _Y++;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
@@ -109,6 +123,8 @@ function moveBackward(rover){
     case "W":
       if(_X<10){
         _X++;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
@@ -117,6 +133,8 @@ function moveBackward(rover){
     case "S":
       if(_Y>0){  
         _Y--;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
@@ -125,6 +143,8 @@ function moveBackward(rover){
     case "E":
       if(_X>0){
         _X--;
+        updatePosition(rover);
+        checkObstacles(rover);
         break;
       } else {
         console.log("El Rover no puede moverse fuera de la rejilla")
@@ -132,9 +152,8 @@ function moveBackward(rover){
       }
   }
   console.log("The Rover is now at " + "["+_X+", "+_Y+"]");
+  recordLog(rover);
 }
-
-var order = "";
 
 function movement(order){
  for (var i = 0; i<order.length; i++){ 
@@ -157,4 +176,22 @@ function movement(order){
       break;
   }
  }
+ console.log("El Rover ha viajado a través de las siguientes coordenadas");
+ console.log(rover.travelLog);
 }  
+
+function recordLog(rover){
+  rover.travelLog.push([_X, _Y])
+}
+
+function checkObstacles(rover){
+  if(grid[_X][_Y]===1){
+    console.log("Hay un obstaculo en el camino, el Rover no puede desplazarse en esa dirección.");
+    _X=rover.travelLog[rover.travelLog.length-1][0];
+    _Y=rover.travelLog[rover.travelLog.length-1][1];    
+  }
+}
+
+function updatePosition(rover){
+  rover.position= [[_X],[_Y]];
+}
