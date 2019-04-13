@@ -1,6 +1,8 @@
+// Rover Object Goes Here
+// Grid para el movimiento de los Rovers. 1 equivale a obstaculo, 2 equivale a la posición de otro Rover
 var grid = [
                    //NORTH
-        [0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+        [2, 0, 0, 1, 0, 0, 0, 0, 0, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
         [0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
@@ -9,7 +11,7 @@ var grid = [
         [0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
 ];                 //SOUTH
 
 var turn = 1;
@@ -30,6 +32,12 @@ var rover2 = {
   travelLog: [[10, 10]]
 }
 
+// ======================
+
+//Instrucciones
+console.log("Puedes mover a los Rovers por turnos, introduce order('instrucciones') para ello.\n Instrucciones validas: \n f: Mueve hacia delante \n b: Mueve hacia atras \n r: Gira a la derecha \n l: Mueve a la izquierda.");
+
+//Esta función llama en casacada todo lo necesario para mover a los Rovers por turnos. 
 function order(orden){
   if (turn===1){
     var queRover = rover1;
@@ -42,18 +50,21 @@ function order(orden){
   }
 }
 
+//Indica que Rover ha de mover. 
 function moveRover(orden, queRover){
-  grid[queRover._X][queRover._Y] = 0;
+  grid[queRover._X][queRover._Y] = 0;                 //Cuando el Rover abandona la casilla la marca como 0 para permitir el movimiento de otros Rover
   movement(orden, queRover);
-  grid[queRover._X][queRover._Y] = 2;
+  grid[queRover._X][queRover._Y] = 2;                 //Cuando termina de mover la marca como 2, ocupada por un Rover.
   console.log("The " + queRover.name + " has travelled through: ");
   console.log(queRover.travelLog);
 }
 
+//Actualiza el log de posiciones del Rover
 function updateTravelLog(queRover){
   queRover.travelLog.push([queRover._X, queRover._Y]);
 }
 
+//Comprueba obstaculos, si hay un obstaculo avisa y recupera la última posición valida.
 function checkObstacles(queRover){
   if (grid[queRover._X][queRover._Y] === 1){
     queRover._X = queRover.travelLog[queRover.travelLog.length-1][0];
@@ -66,6 +77,7 @@ function checkObstacles(queRover){
   }
 }
 
+//Función principal de movimiento
 function movement(orden, queRover){
   for (var i = 0; i<orden.length; i++){ 
   updateTravelLog(queRover);
@@ -91,6 +103,7 @@ function movement(orden, queRover){
   }
  }
 
+ //Funciones desglosadas de movimiento.
 function turnLeft(queRover){
   switch(queRover.direction){
     case "N":
