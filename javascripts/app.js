@@ -26,10 +26,10 @@ var rover1 = {
 
 var rover2 = {
   name: "Rover2",
-  _X: 10,
-  _Y: 10,
+  _X: 9,
+  _Y: 9,
   direction: "N",
-  travelLog: [[10, 10]]
+  travelLog: [[9, 9]]
 }
 
 // ======================
@@ -39,12 +39,13 @@ console.log("Puedes mover a los Rovers por turnos, introduce order('instruccione
 
 //Esta función llama en casacada todo lo necesario para mover a los Rovers por turnos. 
 function order(orden){
+  var queRover;
   if (turn===1){
-    var queRover = rover1;
+    queRover = rover1;
     moveRover(orden, queRover);
     turn++;
   } else if (turn===2){
-    var queRover = rover2;
+    queRover = rover2;
     moveRover(orden, queRover);
     turn--;
   }
@@ -95,7 +96,7 @@ function movement(orden, queRover){
        turnLeft(queRover);
        break;
      default:
-       console.log("Debe introducir un valor valido para el Rover. \n f: Mueve hacia delante \n b: Mueve hacia atras \n r: Gira a la derecha \n l: Mueve a la izquierda.")
+       console.log("You must enter a correct value for the Rover. \n f: Moves forward \n b: Moves backward \n r: Turns Right \n l: Turns left.")
        i=orden.length;
        break;
    }
@@ -148,7 +149,7 @@ function moveForward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "W":
@@ -157,7 +158,7 @@ function moveForward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "S":
@@ -166,7 +167,7 @@ function moveForward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "E":
@@ -175,7 +176,7 @@ function moveForward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
   }
@@ -189,7 +190,7 @@ function moveBackward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "W":
@@ -198,7 +199,7 @@ function moveBackward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "S":
@@ -207,7 +208,7 @@ function moveBackward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
     case "E":
@@ -216,8 +217,9 @@ function moveBackward(queRover){
         checkObstacles(queRover);
         break;
       } else {
-        console.log("El Rover no puede moverse fuera de la rejilla")
+        console.log("The Rover can't move outside the 10x10 grid.")
         break;
       }
   }
  }
+
